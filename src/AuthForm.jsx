@@ -3,7 +3,7 @@ import axios from 'axios'
 import './AuthForm.css'
 export default function AuthForm() {
  useEffect(() => {
-   axios.get('http://localhost:8080/api/registertry')
+   axios.get('http://localhost:8888/api/registertry')
    .then(response => {
     console.log(response.data);
   })
@@ -14,6 +14,7 @@ export default function AuthForm() {
  
 
   const [formData, setFormData] = useState({
+    username:'',
     email: '',
     password: '',
   });
@@ -37,9 +38,10 @@ export default function AuthForm() {
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
       console.log('Form data:', formData);
-      axios.post('http://localhost:8080/api/register', formData)
+      axios.post('http://localhost:8888/api/register', formData)
         .then(response => {
         console.log(response.status);
+        console.log(response.data);
        })
       .catch(error => {
         console.error('There was an error with the POST request:', error);
@@ -61,6 +63,16 @@ export default function AuthForm() {
             required
           />
           {errors.email && <span className="error">{errors.email}</span>}
+        </div>
+        <div className="form-group">
+          <label>Username:</label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div className="form-group">
           <label>Password:</label>
