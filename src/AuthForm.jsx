@@ -1,7 +1,10 @@
 import { useState,useEffect} from "react"
 import axios from 'axios'
 import './AuthForm.css'
+import { useNavigate} from "react-router-dom";
+//import Modal from "./Modal";
 export default function AuthForm() {
+  const navigation = useNavigate()
  useEffect(() => {
    axios.get('http://localhost:8888/api/registertry')
    .then(response => {
@@ -11,8 +14,18 @@ export default function AuthForm() {
     console.error( error);
   });
  }, [])
- 
+ /*const[modalData,setModalData] = useState({
+   encryptionKeys:'',
+   decryptionKeys:''
+ })*/
+ /*const [isModalOpen,setIsModalOpen] = useState(false)
+ const openModal = () => {
+  setIsModalOpen(true);
+};*/
 
+/*const closeModal = () => {
+  setIsModalOpen(false);
+};*/
   const [formData, setFormData] = useState({
     username:'',
     email: '',
@@ -38,10 +51,21 @@ export default function AuthForm() {
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
       console.log('Form data:', formData);
+      
       axios.post('http://localhost:8888/api/register', formData)
         .then(response => {
         console.log(response.status);
-        console.log(response.data);
+        console.log(response.data)
+      /*  setModalData({...modalData,encryptionKeys:response.data.encryptionKeys,
+          decryptionKeys:response.data.decryptionKeys})*/
+        let user = response.data.username
+        if(response.status == 200){
+          //openModal()
+          navigation(`/FileUpload/${user}`)
+        } else{
+          alert('cannot register')
+        }
+        
        })
       .catch(error => {
         console.error('There was an error with the POST request:', error);
@@ -52,6 +76,7 @@ export default function AuthForm() {
     return(
       <div className="signup-form">
       <h2>FileEncrypt</h2>
+     {/*{isModalOpen &&  <Modal isOpen={isModalOpen} closeModal={closeModal} data={modalData}/>}*/}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Email:</label>

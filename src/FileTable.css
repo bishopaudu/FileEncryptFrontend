@@ -1,0 +1,22 @@
+.file-table-container {
+    margin-top: 20px;
+  }
+  
+  .file-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .file-table th,
+  .file-table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .file-table th {
+    background-color: #f2f2f2;
+  }
+  
+  
